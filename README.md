@@ -10,18 +10,22 @@ Install [Docker][docker] and configure [BuildKit][buildkit]:
 docker buildx create --use --name buildkit
 ```
 
-## Usage
-
-```sh
-docker run --rm -it quay.io/bitski/gettext:latest
-```
-
 ## Build
 
 Build a local image:
 
 ```sh
 docker buildx build --tag quay.io/bitski/gettext:latest --load .
+```
+
+## Startup Test
+
+Test that the image runs:
+
+```sh
+docker run --rm -it quay.io/bitski/gettext:latest sh -c \
+  'echo \$PATH \$HOME | envsubst \$HOME'
+# $PATH /root
 ```
 
 ## Publish

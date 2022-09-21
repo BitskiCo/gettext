@@ -1,22 +1,31 @@
 group "default" {
-  targets = ["build"]
+  targets = ["release"]
 }
 
 target "defaults" {
-  platforms = [
-    "linux/amd64",
-    "linux/arm64"
+  context = "."
+  dockerfile = "Dockerfile"
+  tags = [
+    "quay.io/bitski/gettext:latest"
   ]
-  tags = ["quay.io/bitski/gettext"]
 }
 
 target "docker-metadata-action" {}
 
-target "build" {
+target "local" {
   inherits = [
     "defaults",
     "docker-metadata-action"
   ]
-  context = "."
-  dockerfile = "Dockerfile"
+}
+
+target "release" {
+  inherits = [
+    "defaults",
+    "docker-metadata-action"
+  ]
+  platforms = [
+    "linux/amd64",
+    "linux/arm64"
+  ]
 }
